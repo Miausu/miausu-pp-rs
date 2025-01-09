@@ -264,10 +264,47 @@ impl<'m> FxPP<'m> {
             pp *= 0.54;
         }
 
+        if self.map.creator == "quantumvortex" {
+            pp *= 0.814;
+        }
+
+        if self.map.creator == "helloisuck" { //* this is quantumvortex, just an old name
+            pp *= 0.814;
+        }
+
+        if self.map.creator == "NekoShabeta" {
+            pp *= 0.7167;
+        }
+
+        if self.map.creator == "None1637" {
+            pp *= 0.7113;
+        }
+
+        if self.map.creator == "daph" {
+            pp *= 1.0013;
+        }
+
+        if self.map.artist == "katagiri" {
+            pp *= 0.985;
+        }
+
+        if self.map.artist == "Kurokotei" {
+            pp *= 0.89145;
+        }
+
+        if self.map.creator == "ktgster" {
+            pp *= 1.0154;
+        }
+
+        if self.map.artist == "Noah" {
+            pp *= 0.989;
+        }
+
         pp *= match self.map.title.to_lowercase().as_str() {
 
             title if title.contains("Kaat Pack") => 0.7, //* not big nerfing kaat pack. ano's exile 37186 -> 23167 with kselon nerf
             title if title.contains("Kaat Pack 2") => 0.7, //* my brother in christ just define the full name
+            title if title.contains("Kaat's Speedpack") => 0.7, //* i didnt remember this map but now i did
             title if title.contains("Celestial Exploring") => 0.87, //* 24378 -> 21300 and some buffs 
             title if title.contains("Fuquila pack") => 0.92, //* 15441 -> 14206 prob buff paterns 
             title if title.contains("Nervous Young") => 0.87, //* 15151 -> 13181 and little nerf
@@ -290,6 +327,8 @@ impl<'m> FxPP<'m> {
             // MTC Saga: The beginning (i want to feel your touch) 
             1294019 => 0.01, //* cuz sex bg
             4920468 => 0.7, //* anus exile kaats pack
+            4322080 => 0.681, //* more nekoshabeta nerf cuz the map is too high pp
+            3759944 => 0.691, //* mixxion nerf
             _ => 1.0,
         };
 
