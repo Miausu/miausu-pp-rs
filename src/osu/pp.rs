@@ -420,7 +420,7 @@ impl OsuPpInner {
             // * this is well beyond currently maximum achievable OD which is 12.17 (DTx2 + DA with OD11)
             let (n100_mult, n50_mult) = if self.attrs.od > 0.0 {
                 (
-                    1.1 - (self.attrs.od / 13.33).powf(1.8),
+                    1.1 - (self.attrs.od / 13.33).powf(1.6),
                     1.1 - (self.attrs.od / 13.33).powi(5),
                 )
             } else {
@@ -442,8 +442,8 @@ impl OsuPpInner {
         let flashlight_value = self.compute_flashlight_value();
 
         let nodt_bonus = match !self.mods.change_speed() {
-            true => 1.03,
-            false => 1.0,
+            true => 1.0,
+            false => 1.03,
         };
 
         let mut pp = (
@@ -455,11 +455,11 @@ impl OsuPpInner {
 
         if self.mods.rx() {
             pp = (
-                aim_value.powf(1.4) +
-                speed_value.powf(1.0) +
+                aim_value.powf(1.2) +
+                speed_value.powf(0.0) +
                 acc_value.powf(1.01) +
                 flashlight_value.powf(1.0)
-            ).powf(1.01 / 1.1) * multiplier;
+            ).powf(0.99 / 1.1) * multiplier;
         }
 
         if self.map.creator == "kselon" {
@@ -513,7 +513,12 @@ impl OsuPpInner {
         if self.map.creator == "Plasma" {
             pp *= 0.94;
         }
-
+        if self.map.creator == "Xeara" {
+            pp *= 0.48;
+        }
+        if self.map.artist == "va" {
+            pp *= 0.48;
+        }
         pp *= match self.map.title.to_lowercase().as_str() {
 
             title if title.contains("Kaat Pack") => 0.7, //* not big nerfing kaat pack. ano's exile 37186 -> 23167 with kselon nerf
@@ -582,11 +587,11 @@ impl OsuPpInner {
         }
     
         let ar_factor = if self.mods.rx() {
-            0.15
+            0.05
         } else if self.attrs.ar > 10.33 {
-            0.35 * (self.attrs.ar - 10.33)
+            0.25 * (self.attrs.ar - 10.33)
         } else if self.attrs.ar < 8.0 {
-            0.06 * (8.0 - self.attrs.ar)
+            0.01 * (8.0 - self.attrs.ar)
         } else {
             0.0
         };
