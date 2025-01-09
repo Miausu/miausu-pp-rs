@@ -520,11 +520,8 @@ impl OsuPpInner {
             );
         }
     
-        let ar_factor = if self.mods.rx() {
-            return 1.0;
-        };
 
-        aim_value *= 1.0 + ar_factor * len_bonus;
+        aim_value *= 1.0 + (12.0 - self.attrs.ar);
     
         
         if self.mods.hd() {
