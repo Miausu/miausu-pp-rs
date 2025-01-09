@@ -152,7 +152,7 @@ impl<'m> OsuPP<'m> {
             let placed_points = 2 * n100 + n50 + self.n_misses;
             let missing_objects = n_objects - n100 - n50 - self.n_misses;
             let missing_points =
-                ((6.0 * acc / 1.2 * n_objects as f32).round() as usize).saturating_sub(placed_points);
+                ((6.0 * acc * n_objects as f32).round() as usize).saturating_sub(placed_points);
 
             let mut n300 = missing_objects.min(missing_points / 6);
             n50 += missing_objects - n300;
@@ -172,7 +172,7 @@ impl<'m> OsuPP<'m> {
             self.n50.replace(n50);
         } else {
             let misses = self.n_misses.min(n_objects);
-            let target_total = (acc / 1.2* n_objects as f32 * 6.0).round() as usize;
+            let target_total = (acc * n_objects as f32 * 6.0).round() as usize;
             let delta = target_total - (n_objects - misses);
 
             let mut n300 = delta / 5;
