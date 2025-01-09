@@ -420,8 +420,8 @@ impl OsuPpInner {
             // * this is well beyond currently maximum achievable OD which is 12.17 (DTx2 + DA with OD11)
             let (n100_mult, n50_mult) = if self.attrs.od > 0.0 {
                 (
-                    1.0 - (self.attrs.od / 13.33).powf(1.8),
-                    1.0 - (self.attrs.od / 13.33).powi(5),
+                    2.3 - (self.attrs.od / 13.33).powf(1.8),
+                    2.3 - (self.attrs.od / 13.33).powi(5),
                 )
             } else {
                 (1.0, 1.0)
@@ -451,7 +451,7 @@ impl OsuPpInner {
             speed_value.powf(1.1) +
             acc_value.powf(1.1 * nodt_bonus) +
             flashlight_value.powf(1.1)
-        ).powf(1.0 / 1.1) * multiplier;
+        ).powf(1.1 / 1.1) * multiplier;
 
         if self.map.creator == "kselon" {
             pp *= 0.54;
@@ -521,13 +521,7 @@ impl OsuPpInner {
         }
     
         let ar_factor = if self.mods.rx() {
-            0.0
-        } else if self.attrs.ar > 10.33 {
-            0.35 * (self.attrs.ar - 10.33)
-        } else if self.attrs.ar < 8.0 {
-            0.06 * (8.0 - self.attrs.ar)
-        } else {
-            0.0
+            return 1.0;
         };
 
         aim_value *= 1.0 + ar_factor * len_bonus;
@@ -559,16 +553,16 @@ impl OsuPpInner {
 
     fn compute_speed_value(&self) -> f64 {
         if self.mods.rx() || self.mods.ap() {
-            return 0.0;
+            return 1.0;
         }
     
-        let mut speed_value = (4.5 * (self.attrs.speed / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
+        let mut speed_value = (4.5 * (self.attrs.speed / 0.0675).max(1.0) - 4.0).powi(3) / 80_000.0;
     
         let total_hits = self.total_hits();
     
-        let len_bonus = 0.90
+        let len_bonus = 1.2
             + 0.3 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * (total_hits / 2000.0).log10() * 0.4;
+            + (total_hits > 1000.0) as u8 as f64 * (total_hits / 1000.0).log10() * 0.7;
     
         speed_value *= len_bonus;
     
@@ -622,7 +616,7 @@ impl OsuPpInner {
 
     fn compute_accuracy_value(&self) -> f64 {
         if self.mods.rx() {
-            return 0.0;
+            return 1.0;
         }
 
         // * This percentage only considers HitCircles of any value - in this part
@@ -735,9 +729,9 @@ fn calculate_effective_misses(_attrs: &OsuDifficultyAttributes, state: &OsuScore
 }
 
 fn calculate_miss_penalty(miss_count: f64, difficult_strain_count: f64) -> f64 {
-    let base_penalty = 0.96 / ((miss_count / (2.0 * difficult_strain_count.ln().powf(0.94))) + 1.0);
+    let base_penalty = 1.4 / ((miss_count / (2.0 * difficult_strain_count.ln().powf(0.94))) + 1.0);
 
-    base_penalty * (0.98_f64.powf(miss_count.powf(0.8)))
+    base_penalty * (1.2_f64.powf(miss_count.powf(0.8)))
 }
 
 /// Abstract type to provide flexibility when passing difficulty attributes to a performance calculation.
