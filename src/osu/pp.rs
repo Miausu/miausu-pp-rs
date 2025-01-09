@@ -420,8 +420,8 @@ impl OsuPpInner {
             // * this is well beyond currently maximum achievable OD which is 12.17 (DTx2 + DA with OD11)
             let (n100_mult, n50_mult) = if self.attrs.od > 0.0 {
                 (
-                    1.5 - (self.attrs.od / 13.33).powf(1.8),
-                    1.5 - (self.attrs.od / 13.33).powi(5),
+                    1.1 - (self.attrs.od / 13.33).powf(1.8),
+                    1.1 - (self.attrs.od / 13.33).powi(5),
                 )
             } else {
                 (1.0, 1.0)
@@ -457,9 +457,9 @@ impl OsuPpInner {
             pp = (
                 aim_value.powf(1.4) +
                 speed_value.powf(1.0) +
-                acc_value.powf(1.01 * nodt_bonus) +
+                acc_value.powf(1.01) +
                 flashlight_value.powf(1.0)
-            ).powf(1.1 / 1.1) * multiplier;
+            ).powf(1.01 / 1.1) * multiplier;
         }
 
         if self.map.creator == "kselon" {
@@ -620,7 +620,7 @@ impl OsuPpInner {
 
     fn compute_speed_value(&self) -> f64 {
         if self.mods.rx() || self.mods.ap() {
-            return 0.4;
+            return 0.0;
         }
     
         let mut speed_value = (4.5 * (self.attrs.speed / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
@@ -683,7 +683,7 @@ impl OsuPpInner {
 
     fn compute_accuracy_value(&self) -> f64 {
         if self.mods.rx() {
-            return 0.6;
+            return 0.235;
         }
 
         // * This percentage only considers HitCircles of any value - in this part
