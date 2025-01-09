@@ -16,7 +16,7 @@ pub(crate) struct Aim {
 }
 
 impl Aim {
-    const SKILL_MULTIPLIER: f64 = 26.55;
+    const SKILL_MULTIPLIER: f64 = 25.35;
     const STRAIN_DECAY_BASE: f64 = 0.15;
 
     pub(crate) fn new(with_sliders: bool) -> Self {
