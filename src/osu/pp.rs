@@ -51,10 +51,6 @@ pub struct OsuPP<'map> {
     pub(crate) passed_objects: Option<usize>,
     pub(crate) clock_rate: Option<f64>,
     pub(crate) hitresult_priority: Option<HitResultPriority>,
-
-    pub(crate) ac: Option<usize>,
-    pub(crate) arc: Option<f64>,
-    pub(crate) hdr: Option<bool>,
 }
 
 impl<'map> OsuPP<'map> {
@@ -76,9 +72,6 @@ impl<'map> OsuPP<'map> {
             clock_rate: None,
             hitresult_priority: None,
 
-            ac: None,
-            arc: None,
-            hdr: None
         }
     }
 
@@ -187,23 +180,6 @@ impl<'map> OsuPP<'map> {
         self
     }
 
-    #[inline]
-    pub fn ac(mut self, ac: usize) -> Self {
-        self.ac = Some(ac);  // Set hdr to Some(hdr)
-        self
-    }
-
-    #[inline]
-    pub fn arc(mut self, arc: f64) -> Self {
-        self.arc = Some(arc);  // Set hdr to Some(hdr)
-        self
-    }
-
-    #[inline]
-    pub fn hdr(mut self, hdr: bool) -> Self {
-        self.hdr = Some(hdr);  // Set hdr to Some(hdr)
-        self
-    }
 
     /// Provide parameters through an [`OsuScoreState`].
     #[inline]
@@ -400,10 +376,6 @@ impl<'map> OsuPP<'map> {
             state,
             effective_miss_count,
             map: self.map.clone(),
-
-            ac: self.ac.unwrap_or(50),
-            arc: self.arc.unwrap_or(0.0),
-            hdr: self.hdr.unwrap_or(false)
         };
 
         inner.calculate()
@@ -416,11 +388,7 @@ struct OsuPpInner {
     acc: f64,
     state: OsuScoreState,
     effective_miss_count: f64,
-    map: Beatmap,
-
-    ac: usize,
-    arc: f64,
-    hdr: bool    
+    map: Beatmap,  
 }
 
 impl OsuPpInner {
@@ -472,7 +440,6 @@ impl OsuPpInner {
         let speed_value = self.compute_speed_value();
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
-        let cheat_value = self.compute_cheat_value();
 
         let nodt_bonus = match !self.mods.change_speed() {
             true => 1.03,
@@ -484,7 +451,7 @@ impl OsuPpInner {
             speed_value.powf(1.1) +
             acc_value.powf(1.1 * nodt_bonus) +
             flashlight_value.powf(1.1)
-        ).powf(1.0 / 1.1) * multiplier * cheat_value;
+        ).powf(1.0 / 1.1) * multiplier;
 
         if self.map.creator == "kselon" {
             pp *= 0.54;
@@ -529,29 +496,6 @@ impl OsuPpInner {
             pp,
             effective_miss_count: self.effective_miss_count,
         }
-    }
-
-    fn compute_cheat_value(&self) -> f64 {
-        let mut multiplier: f64 = 1.0;
-
-        let ac_multiplier: f64 = 1.0 - (self.ac as f64 / 50.0) * 0.7;
-    
-        multiplier += ac_multiplier * 0.3;        
-    
-        let arc_multiplier: f64 = if self.arc < 9.0 {
-            -((9.0 - self.arc).exp() - 1.0).min(0.2)
-        } else if self.arc <= 10.0 {
-            ((self.arc - 9.0) / 1.0) * 0.1
-        } else {
-            (((self.arc - 10.0).exp() - 1.0) / 10.0)
-                .min(0.2)
-        };
-    
-        multiplier += arc_multiplier;
-    
-        multiplier = multiplier.min(1.4);
-    
-        multiplier
     }
 
     fn compute_aim_value(&self) -> f64 {
