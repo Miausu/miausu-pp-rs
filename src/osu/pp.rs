@@ -521,7 +521,7 @@ impl OsuPpInner {
         }
     
         let ar_factor = if self.mods.rx() {
-            0.0
+            0.45
         } else if self.attrs.ar > 10.33 {
             0.35 * (self.attrs.ar - 10.33)
         } else if self.attrs.ar < 8.0 {
@@ -622,7 +622,7 @@ impl OsuPpInner {
 
     fn compute_accuracy_value(&self) -> f64 {
         if self.mods.rx() {
-            return 0.0;
+            return 1.0;
         }
 
         // * This percentage only considers HitCircles of any value - in this part
