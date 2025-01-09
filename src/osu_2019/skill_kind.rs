@@ -1,13 +1,13 @@
 use super::DifficultyObject;
 
-const SINGLE_SPACING_TRESHOLD: f32 = 125.0;
-const SPEED_ANGLE_BONUS_BEGIN: f32 = 5.0 * std::f32::consts::FRAC_PI_6;
+const SINGLE_SPACING_TRESHOLD: f32 = 115.0;
+const SPEED_ANGLE_BONUS_BEGIN: f32 = 5.4 * std::f32::consts::FRAC_PI_6;
 const PI_OVER_4: f32 = std::f32::consts::FRAC_PI_4;
 const PI_OVER_2: f32 = std::f32::consts::FRAC_PI_2;
 
-const MIN_SPEED_BONUS: f32 = 75.0;
-const MAX_SPEED_BONUS: f32 = 45.0;
-const SPEED_BALANCING_FACTOR: f32 = 40.0;
+const MIN_SPEED_BONUS: f32 = 80.0;
+const MAX_SPEED_BONUS: f32 = 62.0;
+const SPEED_BALANCING_FACTOR: f32 = 37.0;
 
 const AIM_ANGLE_BONUS_BEGIN: f32 = std::f32::consts::FRAC_PI_3;
 const TIMING_THRESHOLD: f32 = 107.0;
@@ -30,7 +30,7 @@ impl SkillKind {
 
                 if let Some((prev_jump_dist, prev_strain_time)) = current.prev {
                     if let Some(angle) = current.angle.filter(|a| *a > AIM_ANGLE_BONUS_BEGIN) {
-                        let scale = 90.0;
+                        let scale = 94.0;
 
                         let angle_bonus = (((angle - AIM_ANGLE_BONUS_BEGIN).sin()).powi(2)
                             * (prev_jump_dist - scale).max(0.0)
