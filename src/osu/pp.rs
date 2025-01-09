@@ -550,6 +550,7 @@ impl OsuPpInner {
             4322080 => 0.681, //* more nekoshabeta nerf cuz the map is too high pp
             3759944 => 0.691, //* mixxion nerf
             4578076 => 0.52, //* shit map
+            3766270 => 0.48, //* fuquila pack flameflower
             _ => 1.0,
         };
 
