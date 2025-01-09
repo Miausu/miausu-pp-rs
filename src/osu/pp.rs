@@ -582,7 +582,7 @@ impl OsuPpInner {
         }
     
         let ar_factor = if self.mods.rx() {
-            0.45
+            0.15
         } else if self.attrs.ar > 10.33 {
             0.35 * (self.attrs.ar - 10.33)
         } else if self.attrs.ar < 8.0 {
@@ -620,7 +620,7 @@ impl OsuPpInner {
 
     fn compute_speed_value(&self) -> f64 {
         if self.mods.rx() || self.mods.ap() {
-            return 1.0;
+            return 0.4;
         }
     
         let mut speed_value = (4.5 * (self.attrs.speed / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
@@ -683,7 +683,7 @@ impl OsuPpInner {
 
     fn compute_accuracy_value(&self) -> f64 {
         if self.mods.rx() {
-            return 1.0;
+            return 0.6;
         }
 
         // * This percentage only considers HitCircles of any value - in this part
