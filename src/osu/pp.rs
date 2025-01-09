@@ -420,8 +420,8 @@ impl OsuPpInner {
             // * this is well beyond currently maximum achievable OD which is 12.17 (DTx2 + DA with OD11)
             let (n100_mult, n50_mult) = if self.attrs.od > 0.0 {
                 (
-                    1.0 - (self.attrs.od / 13.33).powf(1.8),
-                    1.0 - (self.attrs.od / 13.33).powi(5),
+                    1.5 - (self.attrs.od / 13.33).powf(1.8),
+                    1.5 - (self.attrs.od / 13.33).powi(5),
                 )
             } else {
                 (1.0, 1.0)
@@ -452,6 +452,15 @@ impl OsuPpInner {
             acc_value.powf(1.1 * nodt_bonus) +
             flashlight_value.powf(1.1)
         ).powf(1.0 / 1.1) * multiplier;
+
+        if self.mods.rx() {
+            pp = (
+                aim_value.powf(1.4) +
+                speed_value.powf(1.0) +
+                acc_value.powf(1.01 * nodt_bonus) +
+                flashlight_value.powf(1.0)
+            ).powf(1.1 / 1.1) * multiplier;
+        }
 
         if self.map.creator == "kselon" {
             pp *= 0.54;
