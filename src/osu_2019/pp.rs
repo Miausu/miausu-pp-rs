@@ -320,7 +320,19 @@ impl<'m> OsuPP<'m> {
         }
 
         if self.map.artist == "Noah" {
-            pp *= 0.989;
+            pp *= 0.931;
+        }
+
+        if self.map.creator == "Ryuusei Aika" { //* mapper who's stuck in 2014 shitmaps
+            pp *= 0.01;
+        }
+
+        if self.map.creator == "Noa Himesaka" {
+            pp *= 0.78;
+        }
+
+        if self.map.creator == "Plasma" {
+            pp *= 0.94;
         }
 
         pp *= match self.map.title.to_lowercase().as_str() {
@@ -335,14 +347,15 @@ impl<'m> OsuPP<'m> {
             title if title.contains("Yomi yori") => 0.93, //* wrong capitalization
             title if title.contains("Electric") => 0.95, //* not last diff 16119 -> 15113, last 16727 -> 15890 buff speed
             title if title.contains("Faith") => 0.91, //* 14764 -> 13435 buff speed nerf length
-            title if title.contains("EXILE") => 0.7, //* if ano back exile it will nerf - bro the song is in full caps
+            title if title.contains("EXILE") => 0.645, //* if ano back exile it will nerf - bro the song is in full caps
             title if title.contains("Reverie") => 1.25, //* buff reverie cuz big nerf of speed, cs, patterns. 19796 -> 24745
             title if title.contains("Fantastic") => 1.15, //* nerf as reverie. 16105 -> 18521
             title if title.contains("Kokushi Musou") => 1.09, //* 18313 -> 19961
             title if title.contains("Apory") => 1.13, //* 22369 -> 25277
             title if title.contains("Crystalia") => 0.75, //* 19351 -> 16642 cuz high cs buff
             title if title.contains("Speed-Up Map Pack") => 0.70, //* put an end 1.2x 21724 -> 19334
-
+            title if title.contains("Xeroa") => 0.71, //* scubdomino better mapper but i'm still nerfing it
+            title if title.contains("Fuck You One More Time") => 0.74, 
             _ => 1.0,
         };
 
