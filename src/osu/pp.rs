@@ -576,9 +576,9 @@ impl OsuPpInner {
     
         let total_hits = self.total_hits();
     
-        let len_bonus = 1.0
-            + 0.5 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * (total_hits / 2000.0).log10() * 0.6;
+        let len_bonus = 1.1
+            + 0.7 * (total_hits / 1500.0).min(1.0)
+            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
     
         aim_value *= len_bonus;
     
@@ -635,10 +635,9 @@ impl OsuPpInner {
     
         let total_hits = self.total_hits();
     
-        let len_bonus = 0.90
-            + 0.3 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f64 * (total_hits / 2000.0).log10() * 0.4;
-    
+        let len_bonus = 1.1
+            + 0.7 * (total_hits / 1500.0).min(1.0)
+            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
         speed_value *= len_bonus;
     
         if self.effective_miss_count > 0.0 {
