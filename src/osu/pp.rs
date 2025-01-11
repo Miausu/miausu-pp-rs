@@ -539,7 +539,7 @@ impl OsuPpInner {
             title if title.contains("Crystalia") => 0.75, //* 19351 -> 16642 cuz high cs buff
             title if title.contains("Speed-Up Map Pack") => 0.70, //* put an end 1.2x 21724 -> 19334
             title if title.contains("Xeroa") => 0.71, //* scubdomino better mapper but i'm still nerfing it
-            title if title.contains("Fuck You One More Time") => 0.74, 
+            title if title.contains("Fuck You One More Time") => 0.74, //* good map but overweighted
             _ => 1.0,
         };
 
@@ -551,6 +551,8 @@ impl OsuPpInner {
             3759944 => 0.691, //* mixxion nerf
             4578076 => 0.52, //* shit map
             3766270 => 0.48, //* fuquila pack flameflower
+            4679108 => 0.691, //* Noa Himesaka yomi yori
+            3101174 => 0.895, //* Snow Note's EXILE, small nerf because the speed part in it is crazy overweight
             _ => 1.0,
         };
 
