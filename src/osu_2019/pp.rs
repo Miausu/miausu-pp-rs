@@ -364,7 +364,7 @@ impl<'m> OsuPP<'m> {
             1294019 => 0.01, //* cuz sex bg
             4920468 => 0.7, //* anus exile kaats pack
             4322080 => 0.681, //* more nekoshabeta nerf cuz the map is too high pp
-            3759944 => 0.691, //* mixxion nerf
+            3759944 => 0.591, //* mixxion nerf
             4578076 => 0.52, //* shit map
             _ => 1.0,
         };
