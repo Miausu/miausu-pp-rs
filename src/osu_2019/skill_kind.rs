@@ -1,16 +1,16 @@
 use super::DifficultyObject;
 
-const SINGLE_SPACING_TRESHOLD: f32 = 115.0;
-const SPEED_ANGLE_BONUS_BEGIN: f32 = 5.4 * std::f32::consts::FRAC_PI_6;
+const SINGLE_SPACING_TRESHOLD: f32 = 85.0;
+const SPEED_ANGLE_BONUS_BEGIN: f32 = 5.5 * std::f32::consts::FRAC_PI_6;
 const PI_OVER_4: f32 = std::f32::consts::FRAC_PI_4;
 const PI_OVER_2: f32 = std::f32::consts::FRAC_PI_2;
 
 const MIN_SPEED_BONUS: f32 = 80.0;
-const MAX_SPEED_BONUS: f32 = 62.0;
-const SPEED_BALANCING_FACTOR: f32 = 37.0;
+const MAX_SPEED_BONUS: f32 = 50.0;
+const SPEED_BALANCING_FACTOR: f32 = 38.1;
 
 const AIM_ANGLE_BONUS_BEGIN: f32 = std::f32::consts::FRAC_PI_3;
-const TIMING_THRESHOLD: f32 = 107.0;
+const TIMING_THRESHOLD: f32 = 98.0;
 
 #[derive(Copy, Clone)]
 pub(crate) enum SkillKind {
