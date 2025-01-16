@@ -1,16 +1,16 @@
 use super::DifficultyObject;
 
-const SINGLE_SPACING_TRESHOLD: f32 = 125.0;
-const SPEED_ANGLE_BONUS_BEGIN: f32 = 6.5 * std::f32::consts::FRAC_PI_6; // 45 degrees
+const SINGLE_SPACING_TRESHOLD: f32 = 85.0;
+const SPEED_ANGLE_BONUS_BEGIN: f32 = 5.5 * std::f32::consts::FRAC_PI_6; // 45 degrees
 const PI_OVER_4: f32 = std::f32::consts::FRAC_PI_4;
 const PI_OVER_2: f32 = std::f32::consts::FRAC_PI_2;
 
-const MIN_SPEED_BONUS: f32 = 125.0; // ~300BPM
-const MAX_SPEED_BONUS: f32 = 55.0; // ~150BPM
-const SPEED_BALANCING_FACTOR: f32 = 37.0; // ~100BPM 
+const MIN_SPEED_BONUS: f32 = 80.0; // ~300BPM
+const MAX_SPEED_BONUS: f32 = 50.0; // ~150BPM
+const SPEED_BALANCING_FACTOR: f32 = 38.1; // ~100BPM 
 
 const AIM_ANGLE_BONUS_BEGIN: f32 = std::f32::consts::FRAC_PI_3;
-const TIMING_THRESHOLD: f32 = 87.0; // ~200BPM
+const TIMING_THRESHOLD: f32 = 110.0; // ~200BPM
 
 #[derive(Copy, Clone)]
 pub(crate) enum SkillKind {
@@ -30,14 +30,14 @@ impl SkillKind {
 
                 if let Some((prev_jump_dist, prev_strain_time)) = current.prev {
                     if let Some(angle) = current.angle.filter(|a| *a > AIM_ANGLE_BONUS_BEGIN) {
-                        let scale = 105.0;
+                        let scale = 94.0;
 
                         let angle_bonus = (((angle - AIM_ANGLE_BONUS_BEGIN).sin()).powi(2)
                             * (prev_jump_dist - scale).max(0.0)
                             * (current.jump_dist - scale).max(0.0))
                         .sqrt();
 
-                        result = 2.3 * apply_diminishing_exp(angle_bonus.max(0.0))
+                        result = 1.5 * apply_diminishing_exp(angle_bonus.max(0.0))
                             / (TIMING_THRESHOLD).max(prev_strain_time) 
                     }
                 }
@@ -87,7 +87,7 @@ impl SkillKind {
 
                 (1.0 + (speed_bonus - 1.0) * 0.75)
                     * angle_bonus
-                    * (0.95 + speed_bonus * (dist / SINGLE_SPACING_TRESHOLD).powf(3.5))
+                    * (0.8 + speed_bonus * (dist / SINGLE_SPACING_TRESHOLD).powf(3.5))
                     / current.strain_time
             }
         }

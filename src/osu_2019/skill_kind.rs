@@ -10,7 +10,7 @@ const MAX_SPEED_BONUS: f32 = 50.0;
 const SPEED_BALANCING_FACTOR: f32 = 38.1;
 
 const AIM_ANGLE_BONUS_BEGIN: f32 = std::f32::consts::FRAC_PI_3;
-const TIMING_THRESHOLD: f32 = 98.0;
+const TIMING_THRESHOLD: f32 = 110.0;
 
 #[derive(Copy, Clone)]
 pub(crate) enum SkillKind {
@@ -87,7 +87,7 @@ impl SkillKind {
 
                 (1.0 + (speed_bonus - 1.0) * 0.75)
                     * angle_bonus
-                    * (0.95 + speed_bonus * (dist / SINGLE_SPACING_TRESHOLD).powf(3.5))
+                    * (0.8 + speed_bonus * (dist / SINGLE_SPACING_TRESHOLD).powf(3.5))
                     / current.strain_time
             }
         }
