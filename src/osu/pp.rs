@@ -455,11 +455,11 @@ impl OsuPpInner {
 
         if self.mods.rx() {
             pp = (
-                aim_value.powf(1.2 * nodt_bonus) +
+                aim_value.powf(1.001 * nodt_bonus) +
                 speed_value.powf(0.0) +
-                acc_value.powf(1.01 * nodt_bonus) +
+                acc_value.powf(1.00) +
                 flashlight_value.powf(1.0)
-            ).powf(0.99 / 1.1) * multiplier;
+            ).powf(0.96 / 1.1) * multiplier;
         }
 
         if self.map.creator == "kselon" {
@@ -576,9 +576,9 @@ impl OsuPpInner {
     
         let total_hits = self.total_hits();
     
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f64 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f64 * 0.65 * (total_hits / 2000.0).log10();
     
         aim_value *= len_bonus;
     
@@ -590,7 +590,7 @@ impl OsuPpInner {
         }
     
         let ar_factor = if self.mods.rx() {
-            0.05
+            0.1
         } else if self.attrs.ar > 10.33 {
             0.25 * (self.attrs.ar - 10.33)
         } else if self.attrs.ar < 8.0 {
@@ -635,9 +635,9 @@ impl OsuPpInner {
     
         let total_hits = self.total_hits();
     
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f64 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f64 * 0.65 * (total_hits / 2000.0).log10();
         speed_value *= len_bonus;
     
         if self.effective_miss_count > 0.0 {
@@ -729,7 +729,7 @@ impl OsuPpInner {
             acc_value *= 1.02;
         }
 
-        if better_acc_percentage >= 0.6 && better_acc_percentage <= 0.93 {
+        if better_acc_percentage >= 0.93 && better_acc_percentage <= 1.0 {
             let scaling_factor = 0.5 + (better_acc_percentage - 0.6) * 0.3 / 0.33;
             acc_value *= scaling_factor;
         }

@@ -391,9 +391,9 @@ impl<'m> OsuPP<'m> {
     
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
     
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f32 * 0.65 * (total_hits / 2000.0).log10();
         aim_value *= len_bonus;
     
         if effective_miss_count > 0.0 {
@@ -450,9 +450,9 @@ impl<'m> OsuPP<'m> {
             (6.0 * (attributes.speed_strain as f32 / 0.0675).max(1.0) - 4.0).powi(3) / 55_000.0;
     
         // Longer maps are worth more
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f32 * 0.65 * (total_hits / 2000.0).log10();
         speed_value *= len_bonus;
     
         // Penalize misses
