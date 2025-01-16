@@ -265,7 +265,7 @@ impl<'m> OsuPP<'m> {
         let streams_nerf =
             ((difficulty.speed_strain / difficulty.aim_strain) * 100.0).round() / 100.0;
 
-        if streams_nerf < 1.05 {
+        if streams_nerf < 1.2 {
             let acc_factor = (1.0 - self.acc.unwrap()).abs();
             acc_depression = (0.9 + acc_factor).min(1.2);
 
@@ -275,8 +275,8 @@ impl<'m> OsuPP<'m> {
         }
 
         let mut pp = (aim_value.powf(1.185)
-            + speed_value.powf(0.83 * acc_depression)
-            + acc_value.powf(1.14)
+            + speed_value.powf(0.63 * acc_depression)
+            + acc_value.powf(1.09)
         ).powf(1.0 / 1.1) * multiplier;
 
         if self.mods.dt() && self.mods.hr() {
@@ -447,7 +447,7 @@ impl<'m> OsuPP<'m> {
         let attributes = self.attributes.as_ref().unwrap();
     
         let mut speed_value =
-            (6.0 * (attributes.speed_strain as f32 / 0.0675).max(1.0) - 4.0).powi(3) / 55_000.0;
+            (4.2 * (attributes.speed_strain as f32 / 0.0775).max(1.0) - 4.5).powi(3) / 75_000.0;
     
         // Longer maps are worth more
         let len_bonus = 1.0
@@ -482,13 +482,13 @@ impl<'m> OsuPP<'m> {
         }
     
         // Scaling the speed value with accuracy and OD
-        speed_value *= (1.1 + attributes.od as f32 * attributes.od as f32 / 600.0)
+        speed_value *= (0.98 + attributes.od as f32 * attributes.od as f32 / 1200.0)
             * self
                 .acc
                 .unwrap()
                 .powf((14.0 - attributes.od.max(8.0) as f32) / 2.0);
     
-        speed_value *= 0.95_f32.powf((self.n50.unwrap() as f32 - total_hits / 500.0).max(0.0));
+        speed_value *= 0.82_f32.powf((self.n50.unwrap() as f32 - total_hits / 1000.0).max(0.0));
     
         speed_value
     }    

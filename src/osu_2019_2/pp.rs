@@ -256,8 +256,8 @@ impl<'m> FxPP<'m> {
         let acc_value = self.compute_accuracy_value(total_hits);
 
         let mut pp = (aim_value.powf(1.185)
-            + speed_value.powf(0.83)
-            + acc_value.powf(1.14)
+            + speed_value.powf(0.63)
+            + acc_value.powf(1.09)
         ).powf(1.0 / 1.1) * multiplier;
 
         if self.map.creator == "kselon" {
@@ -375,9 +375,9 @@ impl<'m> FxPP<'m> {
         let mut aim_value = (5.0 * (raw_aim / 0.0670).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f32 * 0.65 * (total_hits / 2000.0).log10();
         aim_value *= len_bonus;
 
         // Penalize misses
@@ -397,12 +397,12 @@ impl<'m> FxPP<'m> {
         let attributes = self.attributes.as_ref().unwrap();
 
         let mut speed_value =
-            (5.0 * (attributes.speed_strain as f32 / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
+            (5.0 * (attributes.speed_strain as f32 / 0.0775).max(1.0) - 4.0).powi(3) / 100_000.0;
 
         // Longer maps are worth more
-        let len_bonus = 1.1
-            + 0.7 * (total_hits / 1500.0).min(1.0)
-            + (total_hits > 1500.0) as u8 as f32 * 0.7 * (total_hits / 1500.0).log10();
+        let len_bonus = 1.0
+            + 0.55 * (total_hits / 2000.0).min(1.0)
+            + (total_hits > 2000.0) as u8 as f32 * 0.65 * (total_hits / 2000.0).log10();
         speed_value *= len_bonus;
 
         // Penalize misses
@@ -413,7 +413,7 @@ impl<'m> FxPP<'m> {
 
         // Scaling the speed value with accuracy and OD
         speed_value *= 0.02 + self.acc.unwrap();
-        speed_value *= 0.96 + attributes.od as f32 * attributes.od as f32 / 1600.0;
+        speed_value *= 0.86 + attributes.od as f32 * attributes.od as f32 / 1600.0;
 
         speed_value
     }
